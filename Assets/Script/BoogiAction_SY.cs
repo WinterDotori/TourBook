@@ -11,13 +11,15 @@ public class BoogiAction_SY : MonoBehaviour
     private bool isPickLanguage = false;
     public int textIndex = 0;
     public bool isClickNextButton = false;
-    // public bool isReset
 
-    public Animator BoogiAni = null;
+    public GameObject SpeechBubble = null;
+    [SerializeField] private GameObject nextButton = null;
 
     private void Awake()
     {
         speechText.gameObject.GetComponent<TextMeshProUGUI>().text = "언어를 선택하세요.\n(Choose a Language)";
+        if (nextButton.activeSelf) nextButton.SetActive(false);
+        if (!SpeechBubble.activeSelf) SpeechBubble.SetActive(true);
     }
 
     private void Update()
@@ -29,8 +31,7 @@ public class BoogiAction_SY : MonoBehaviour
             if (languageSelectButton.activeSelf) languageSelectButton.SetActive(false);
             if (speechText.gameObject.GetComponent<TextMeshProUGUI>().text == "언어를 선택하세요.\n(Choose a Language)")
             {
-                speechText.gameObject.GetComponent<TextMeshProUGUI>().text = "";
-                speechText.gameObject.SetActive(false);
+                if (SpeechBubble.activeSelf) SpeechBubble.SetActive(false);
                 isPickLanguage = true;
             }
         }
@@ -44,8 +45,10 @@ public class BoogiAction_SY : MonoBehaviour
 
         if (other.gameObject.name == "BBB")
         {
-            if (textIndex != 0) textIndex = 0;       // 이거 안들어오는데...;;;; 
-            speechText.gameObject.SetActive(true);
+            if (!SpeechBubble.activeSelf) SpeechBubble.SetActive(true);
+            speechText.gameObject.GetComponent<TextMeshProUGUI>().text = "";
+            if (!nextButton.activeSelf) nextButton.SetActive(true);
+            if (textIndex != 0) textIndex = 0;
             speechText.SetNpcTalkAni(language, other.gameObject.name);
         }
     }
@@ -60,16 +63,19 @@ public class BoogiAction_SY : MonoBehaviour
         {
             case "BBB":
                 {
-                    if (textIndex > speechText.npcTexts.Count)
+                    if (!isClickNextButton && textIndex == 0)
                     {
-                        if (speechText.gameObject.activeSelf) speechText.gameObject.SetActive(false);
+                        if (!SpeechBubble.activeSelf) SpeechBubble.SetActive(true);
+                        speechText.PlayTyping(textIndex);
+                        textIndex++;
                     } 
 
                     if (isClickNextButton)
                     {
-                        speechText.PlayTyping(textIndex);
-                        textIndex++;
                         isClickNextButton = false;
+                        speechText.PlayTyping(textIndex);
+                        speechText.PlayAnim(other.gameObject.name, textIndex);
+                        textIndex++;
                     }
                 }
                 break;
@@ -92,7 +98,8 @@ public class BoogiAction_SY : MonoBehaviour
     {
         if (language != "KOR" && language != "ENG") return;
 
-        if (speechText.gameObject.activeSelf) speechText.gameObject.SetActive(false);
+        if (SpeechBubble.activeSelf) SpeechBubble.SetActive(false);
+        if (textIndex != 0) textIndex = 0;
     }
 
     private void LookPlayer()                           // 플레이어를 바라보는 시선처리(-)

@@ -805,7 +805,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5, z: -13}
+  m_LocalPosition: {x: 1.96, y: 5, z: -13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -850,8 +850,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3, y: -2.0199995}
-  m_SizeDelta: {x: 2, y: 1.2}
+  m_AnchoredPosition: {x: -3, y: -2.67}
+  m_SizeDelta: {x: 1.5, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1130075236
 MonoBehaviour:
@@ -867,7 +867,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   language: KOR
   boogiAction: {fileID: 1633287400}
-  speechText: {fileID: 4734770742170619218}
   textIndex: 0
 --- !u!114 &1130075237
 MonoBehaviour:
@@ -991,7 +990,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418840510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1001,7 +1000,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -5.07, y: 1.24}
+  m_AnchoredPosition: {x: 4.4, y: -2.7}
   m_SizeDelta: {x: 3, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1418840512
@@ -1112,7 +1111,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   language: 
   boogiAction: {fileID: 1633287400}
-  speechText: {fileID: 4734770742170619218}
   textIndex: 0
 --- !u!1 &1544187642
 GameObject:
@@ -1278,7 +1276,8 @@ MonoBehaviour:
   language: 
   textIndex: 5
   isClickNextButton: 0
-  BoogiAni: {fileID: 5866666020668533882}
+  SpeechBubble: {fileID: 1388886763300208509}
+  nextButton: {fileID: 1418840510}
 --- !u!4 &1633287401
 Transform:
   m_ObjectHideFlags: 0
@@ -1364,8 +1363,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3, y: -2.02}
-  m_SizeDelta: {x: 2, y: 1.2}
+  m_AnchoredPosition: {x: 3, y: -2.67}
+  m_SizeDelta: {x: 1.5, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1976494057
 MonoBehaviour:
@@ -1381,7 +1380,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   language: ENG
   boogiAction: {fileID: 1633287400}
-  speechText: {fileID: 4734770742170619218}
   textIndex: 0
 --- !u!114 &1976494058
 MonoBehaviour:
@@ -2569,6 +2567,7 @@ MonoBehaviour:
   animeNums: 
   isTalking: 0
   boogiAction: {fileID: 1633287400}
+  BoogiAni: {fileID: 5866666020668533882}
 --- !u!1 &4890665110239820963
 GameObject:
   m_ObjectHideFlags: 0

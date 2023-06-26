@@ -9,6 +9,9 @@ public class SpeechBubbleText_SY : MonoBehaviour
     public List<int> animeNums = null;
     public bool isTalking = false;
     [SerializeField] private BoogiAction_SY boogiAction = null;
+    private IEnumerator coroutine = null;
+    [SerializeField] private Animator BoogiAni = null;
+
 
     public void SetNpcTalkAni(string _language, string _where)              // NPC 위치에 따라 말할 대사 및 애니 설정
     {
@@ -198,9 +201,20 @@ public class SpeechBubbleText_SY : MonoBehaviour
         }
     }
 
-    public void PlayTyping(int num) // 삽입한 텍스트 타이핑식으로 나타내는 기능
+    public void PlayTyping(int num) // 삽입한 텍스트 타이핑식으로 나타내는 기능, 대사가 두개 동시에 나타남(-)
     {
-        StartCoroutine(Typing(npcTexts[num]));
+        if (num <= npcTexts.Count - 1)
+        {
+            if (num > 0 && coroutine != null) StopCoroutine(coroutine);
+            StartCoroutine(Typing(npcTexts[num]));
+            coroutine = Typing(npcTexts[num]);
+        } 
+        else if (num > npcTexts.Count - 1)
+            if (boogiAction.SpeechBubble.activeSelf)
+            {
+                boogiAction.isClickNextButton = false;
+                boogiAction.SpeechBubble.SetActive(false);
+            } 
     }
 
     IEnumerator Typing(string text)
@@ -212,12 +226,24 @@ public class SpeechBubbleText_SY : MonoBehaviour
 
         foreach (char letter in text.ToCharArray())
         {
-            //print(letter);
             addText = addText + letter;
             transform.gameObject.GetComponent<TextMeshProUGUI>().text = addText;
 
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.2f);
             isTalking = false;
         }
+    }
+
+    public void PlayAnim(string where, int num) 
+    {
+        // 0 : idle
+        // 1 : 설명
+        // 2 : 오예이~!
+        // 3 : 헉!?
+        // 4 : 인사
+
+        if (num > animeNums.Count - 1) return;
+
+        BoogiAni.SetInteger(where, num);
     }
 }
