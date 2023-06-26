@@ -11,53 +11,65 @@ public class BoogiAction_SY : MonoBehaviour
     private bool isPickLanguage = false;
     public int textIndex = 0;
     public bool isClickNextButton = false;
+    // public bool isReset
 
-    private void Start()
+    public Animator BoogiAni = null;
+
+    private void Awake()
     {
         speechText.gameObject.GetComponent<TextMeshProUGUI>().text = "언어를 선택하세요.\n(Choose a Language)";
     }
 
     private void Update()
     {
-        LookPlayer();
+        // LookPlayer();
 
-        if (language == "KOR" || language == "ENG")
+        if (!isPickLanguage && (language == "KOR" || language == "ENG"))
         { 
-            languageSelectButton.SetActive(false);
-            isPickLanguage = true;
+            if (languageSelectButton.activeSelf) languageSelectButton.SetActive(false);
             if (speechText.gameObject.GetComponent<TextMeshProUGUI>().text == "언어를 선택하세요.\n(Choose a Language)")
             {
                 speechText.gameObject.GetComponent<TextMeshProUGUI>().text = "";
                 speechText.gameObject.SetActive(false);
+                isPickLanguage = true;
             }
         }
 
-        // if (isPickLanguage && )
+
     }
 
     private void OnTriggerEnter(Collider other)         // 말풍선 오브젝트 켜기, 대사 설정
     {
-        if (other.gameObject.name == "부기" || other.gameObject.name == "부산월드엑스포조형물" ||
-            other.gameObject.name == "달팽이톡" || other.gameObject.name == "안녕광안리조형물" ||
-            other.gameObject.name == "좌수영어방놀이" || other.gameObject.name == "어방축제입구" ||
-            other.gameObject.name == "소망등태마거리")
+        if (language != "KOR" && language != "ENG") return;
+
+        if (other.gameObject.name == "BBB")
         {
-            if (!speechText.gameObject.activeSelf) speechText.gameObject.SetActive(true);
-            speechText.SetNpcText(language, other.gameObject.name);
+            if (textIndex != 0) textIndex = 0;       // 이거 안들어오는데...;;;; 
+            speechText.gameObject.SetActive(true);
+            speechText.SetNpcTalkAni(language, other.gameObject.name);
         }
     }
 
-    private void OnTriggerStay(Collider other)          // 
+    private void OnTriggerStay(Collider other)
     {
+        if (language != "KOR" && language != "ENG") return;
+
+        Debug.Log(other.gameObject.name);
+
         switch (other.gameObject.name)
         {
-            case "부기":
+            case "BBB":
                 {
-                    if (!speechText.isTalking && isClickNextButton)
+                    if (textIndex > speechText.npcTexts.Count)
+                    {
+                        if (speechText.gameObject.activeSelf) speechText.gameObject.SetActive(false);
+                    } 
+
+                    if (isClickNextButton)
                     {
                         speechText.PlayTyping(textIndex);
                         textIndex++;
-                        // PlayAni 함수를 사용해서 대사마다 애니메이션 설정필요(-)
+                        isClickNextButton = false;
                     }
                 }
                 break;
@@ -76,16 +88,14 @@ public class BoogiAction_SY : MonoBehaviour
         }
     }
 
-    private void LookPlayer()                           // 플레이어를 바라보는 시선처리(-)
+    private void OnTriggerExit(Collider other)
     {
+        if (language != "KOR" && language != "ENG") return;
+
+        if (speechText.gameObject.activeSelf) speechText.gameObject.SetActive(false);
     }
 
-    public void PlayAni(string _animeName)              // 애니메이션 명을 넣으면 해당 애니가 시행되는 함수 (-)
+    private void LookPlayer()                           // 플레이어를 바라보는 시선처리(-)
     {
-        switch (_animeName)
-        {
-            case "":
-                break;
-        }
     }
 }
