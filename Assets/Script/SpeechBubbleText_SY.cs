@@ -214,7 +214,7 @@ public class SpeechBubbleText_SY : MonoBehaviour
             {
                 boogiAction.isClickNextButton = false;
                 boogiAction.SpeechBubble.SetActive(false);
-                boogiAni.SetInteger("AniNum", animeNums[num]);
+                boogiAni.SetInteger("AniNum", 0);
             } 
     }
 
@@ -242,9 +242,7 @@ public class SpeechBubbleText_SY : MonoBehaviour
         // 2 : 오예이~!
         // 3 : 헉!?
         // 4 : 인사
-        if (num <= animeNums.Count - 1)
-        {
-            boogiAni.SetInteger("AniNum", animeNums[num]);
-        }
+        if (num >= animeNums.Count) return;
+        boogiAni.SetInteger("AniNum", animeNums[num]);
     }
 }

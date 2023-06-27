@@ -14,9 +14,11 @@ public class BoogiAction_SY : MonoBehaviour
 
     public GameObject SpeechBubble = null;
     [SerializeField] private GameObject nextButton = null;
+    [SerializeField] private GameObject player = null;
 
     private void Awake()
     {
+        if (!player) player = GameObject.FindWithTag("Player");
         speechText.gameObject.GetComponent<TextMeshProUGUI>().text = "언어를 선택하세요.\n(Choose a Language)";
         if (nextButton.activeSelf) nextButton.SetActive(false);
         if (!SpeechBubble.activeSelf) SpeechBubble.SetActive(true);
@@ -24,7 +26,7 @@ public class BoogiAction_SY : MonoBehaviour
 
     private void Update()
     {
-        // LookPlayer();
+        LookPlayer();
 
         if (!isPickLanguage && (language == "KOR" || language == "ENG"))
         { 
@@ -103,8 +105,11 @@ public class BoogiAction_SY : MonoBehaviour
         if (textIndex != 0) textIndex = 0;
     }
 
-    private void LookPlayer()                           // 플레이어를 바라보는 시선처리(-)
+    private void LookPlayer()
     {
+        Vector3 dir = transform.position - player.transform.position;
+        dir.y = 0;
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 3f);
 
     }
 }
