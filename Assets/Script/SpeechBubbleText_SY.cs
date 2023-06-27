@@ -10,7 +10,7 @@ public class SpeechBubbleText_SY : MonoBehaviour
     public bool isTalking = false;
     [SerializeField] private BoogiAction_SY boogiAction = null;
     private IEnumerator coroutine = null;
-    [SerializeField] private Animator BoogiAni = null;
+    [SerializeField] private Animator boogiAni = null;
 
 
     public void SetNpcTalkAni(string _language, string _where)              // NPC 위치에 따라 말할 대사 및 애니 설정
@@ -214,6 +214,7 @@ public class SpeechBubbleText_SY : MonoBehaviour
             {
                 boogiAction.isClickNextButton = false;
                 boogiAction.SpeechBubble.SetActive(false);
+                boogiAni.SetInteger("AniNum", animeNums[num]);
             } 
     }
 
@@ -234,16 +235,16 @@ public class SpeechBubbleText_SY : MonoBehaviour
         }
     }
 
-    public void PlayAnim(string where, int num) 
+    public void PlayAnim(int num) 
     {
         // 0 : idle
         // 1 : 설명
         // 2 : 오예이~!
         // 3 : 헉!?
         // 4 : 인사
-
-        if (num > animeNums.Count - 1) return;
-
-        BoogiAni.SetInteger(where, num);
+        if (num <= animeNums.Count - 1)
+        {
+            boogiAni.SetInteger("AniNum", animeNums[num]);
+        }
     }
 }

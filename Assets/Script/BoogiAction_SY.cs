@@ -67,6 +67,7 @@ public class BoogiAction_SY : MonoBehaviour
                     {
                         if (!SpeechBubble.activeSelf) SpeechBubble.SetActive(true);
                         speechText.PlayTyping(textIndex);
+                        speechText.PlayAnim(textIndex);
                         textIndex++;
                     } 
 
@@ -74,7 +75,7 @@ public class BoogiAction_SY : MonoBehaviour
                     {
                         isClickNextButton = false;
                         speechText.PlayTyping(textIndex);
-                        speechText.PlayAnim(other.gameObject.name, textIndex);
+                        speechText.PlayAnim(textIndex);
                         textIndex++;
                     }
                 }
@@ -104,5 +105,6 @@ public class BoogiAction_SY : MonoBehaviour
 
     private void LookPlayer()                           // 플레이어를 바라보는 시선처리(-)
     {
+
     }
 }
