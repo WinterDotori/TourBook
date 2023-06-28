@@ -7,11 +7,9 @@ public class SpeechBubbleText_SY : MonoBehaviour
 {
     public List<string> npcTexts = null;
     public List<int> animeNums = null;
-    public bool isTalking = false;
     [SerializeField] private BoogiAction_SY boogiAction = null;
-    private IEnumerator coroutine = null;
     [SerializeField] private Animator boogiAni = null;
-
+     public bool isTalking = false;
 
     public void SetNpcTalkAni(string _language, string _where)              // NPC 위치에 따라 말할 대사 및 애니 설정
     {
@@ -22,7 +20,7 @@ public class SpeechBubbleText_SY : MonoBehaviour
         {
             switch (_where)
             {
-                case "BBB":
+                case "StartPoint":
                     npcTexts.Add("안녕?");
                     animeNums.Add(4);
                     npcTexts.Add("나는 부기라고 해! 부산의 마스코트지!");
@@ -58,7 +56,7 @@ public class SpeechBubbleText_SY : MonoBehaviour
                     npcTexts.Add("1년 뒤의 너에게 해줄 말이 있다면 참여해봐!");
                     animeNums.Add(3);
                     break;
-                case "안녕광안리조형물":
+                case "HelloGAL":
                     npcTexts.Add("광안리는 오랜 역사를 지니고 있어!");
                     animeNums.Add(2);
                     npcTexts.Add("고려시대부터 광안리 일대는 어촌마을이었는데 1960년대부터 관광지로 발전하기 시작했어.");
@@ -113,7 +111,7 @@ public class SpeechBubbleText_SY : MonoBehaviour
         {
             switch (_where)
             {
-                case "부기":
+                case "StartPoint":
                     npcTexts.Add("Hi!");
                     animeNums.Add(4);
                     npcTexts.Add("My name is Boogi! Maskot paper in Busan!");
@@ -149,7 +147,7 @@ public class SpeechBubbleText_SY : MonoBehaviour
                     npcTexts.Add("If you have anything to say to you in a year's time, join us!");
                     animeNums.Add(3);
                     break;
-                case "안녕광안리조형물":
+                case "HelloGAL":
                     npcTexts.Add("Gwangalli has a long history.");
                     animeNums.Add(2);
                     npcTexts.Add("Since the Goryeo Dynasty, Gwangalli has been a fishing village, and it has developed into a tourist destination since the 1960s.");
@@ -201,13 +199,11 @@ public class SpeechBubbleText_SY : MonoBehaviour
         }
     }
 
-    public void PlayTyping(int num) // 삽입한 텍스트 타이핑식으로 나타내는 기능, 대사가 두개 동시에 나타남(-)
+    public void PlayTyping(int num)
     {
         if (num <= npcTexts.Count - 1)
         {
-            if (num > 0 && coroutine != null) StopCoroutine(coroutine);
             StartCoroutine(Typing(npcTexts[num]));
-            coroutine = Typing(npcTexts[num]);
         } 
         else if (num > npcTexts.Count - 1)
             if (boogiAction.SpeechBubble.activeSelf)
@@ -237,11 +233,6 @@ public class SpeechBubbleText_SY : MonoBehaviour
 
     public void PlayAnim(int num) 
     {
-        // 0 : idle
-        // 1 : 설명
-        // 2 : 오예이~!
-        // 3 : 헉!?
-        // 4 : 인사
         if (num >= animeNums.Count) return;
         boogiAni.SetInteger("AniNum", animeNums[num]);
     }

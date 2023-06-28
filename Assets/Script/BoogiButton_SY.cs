@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BoogiButton_SY : MonoBehaviour
 {
-    [SerializeField] private string language = "";          // KOR or ENG
+    [SerializeField] private string language = "";
     [SerializeField] private BoogiAction_SY boogiAction = null;
 
     public int textIndex = 0;

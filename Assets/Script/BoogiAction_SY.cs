@@ -7,14 +7,16 @@ public class BoogiAction_SY : MonoBehaviour
 {
     [SerializeField] private SpeechBubbleText_SY speechText = null;
     [SerializeField] private GameObject languageSelectButton = null;
-    public string language = "";                // 언어 버튼 클릭 시 설정된다.
+    [SerializeField] private GameObject nextButton = null;
+    public GameObject SpeechBubble = null;
+    [SerializeField] private GameObject player = null;
+    
+    public string language = "";
     private bool isPickLanguage = false;
     public int textIndex = 0;
     public bool isClickNextButton = false;
 
-    public GameObject SpeechBubble = null;
-    [SerializeField] private GameObject nextButton = null;
-    [SerializeField] private GameObject player = null;
+    
 
     private void Awake()
     {
@@ -37,16 +39,15 @@ public class BoogiAction_SY : MonoBehaviour
                 isPickLanguage = true;
             }
         }
-
-
     }
 
-    private void OnTriggerEnter(Collider other)         // 말풍선 오브젝트 켜기, 대사 설정
+    public void PlayerOnTriggerEnter(Collider other)
     {
         if (language != "KOR" && language != "ENG") return;
 
-        if (other.gameObject.name == "BBB")
+        if (other.gameObject.tag == "TouristAttraction")
         {
+
             if (!SpeechBubble.activeSelf) SpeechBubble.SetActive(true);
             speechText.gameObject.GetComponent<TextMeshProUGUI>().text = "";
             if (!nextButton.activeSelf) nextButton.SetActive(true);
@@ -55,49 +56,31 @@ public class BoogiAction_SY : MonoBehaviour
         }
     }
 
-    private void OnTriggerStay(Collider other)
+    public void PlayerOnTriggerStay(Collider other)
     {
         if (language != "KOR" && language != "ENG") return;
 
-        Debug.Log(other.gameObject.name);
-
-        switch (other.gameObject.name)
+        if (other.gameObject.tag == "TouristAttraction")       // 관광명소 태그 사용(-)
         {
-            case "BBB":
-                {
-                    if (!isClickNextButton && textIndex == 0)
-                    {
-                        if (!SpeechBubble.activeSelf) SpeechBubble.SetActive(true);
-                        speechText.PlayTyping(textIndex);
-                        speechText.PlayAnim(textIndex);
-                        textIndex++;
-                    } 
+            if (!isClickNextButton && textIndex == 0)
+            {
+                if (!SpeechBubble.activeSelf) SpeechBubble.SetActive(true);
+                speechText.PlayTyping(textIndex);
+                speechText.PlayAnim(textIndex);
+                textIndex++;
+            }
 
-                    if (isClickNextButton)
-                    {
-                        isClickNextButton = false;
-                        speechText.PlayTyping(textIndex);
-                        speechText.PlayAnim(textIndex);
-                        textIndex++;
-                    }
-                }
-                break;
-            case "부산월드엑스포조형물":
-                break;
-            case "달팽이톡":
-                break;
-            case "안녕광안리조형물":
-                break;
-            case "좌수영어방놀이":
-                break;
-            case "어방축제입구":
-                break;
-            case "소망등태마거리":
-                break;
+            if (isClickNextButton)
+            {
+                isClickNextButton = false;
+                speechText.PlayTyping(textIndex);
+                speechText.PlayAnim(textIndex);
+                textIndex++;
+            }
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    public void PlayerOnTriggerExit(Collider other)
     {
         if (language != "KOR" && language != "ENG") return;
 
@@ -110,6 +93,15 @@ public class BoogiAction_SY : MonoBehaviour
         Vector3 dir = transform.position - player.transform.position;
         dir.y = 0;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 3f);
+    }
+
+    private void ByeBoogi()
+    { 
+
+    }
+
+    private void HelloBoogi()
+    {
 
     }
 }
